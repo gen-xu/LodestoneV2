@@ -619,7 +619,8 @@ void sendConfig(void)
         configPacket.Z_OeToA     = Z_OETOA;
 
         USBGenericInHandle4 = USBGenWrite(4, (BYTE*) &configPacket, 56);
-        USBGenericInHandle4 = USBGenWrite(4, (BYTE*) &TERMINATE_PACKET, 0);
+        //Required by USB Standard
+        USBGenericInHandle4 = USBGenWrite(4, (BYTE*) &TERMINATE_PACKET, 0); 
     }
 }
 
