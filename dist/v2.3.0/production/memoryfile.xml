@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<project>                                  
+  <executable name="dist/v2.3.0/production/Lodestone_v2.X.production.elf">                 
+    <memory name="program">                 
+      <units>bytes</units>                 
+      <length>132240</length>                 
+      <used>31948</used>                     
+      <free>100292</free>                     
+    </memory>                              
+    <memory name="data">              
+      <units>bytes</units>                 
+      <length>32768</length>                 
+      <used>952</used>                     
+      <free>31816</free>                     
+    </memory>                              
+  </executable>                            
+</project>                                 
