@@ -27,11 +27,11 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 PROJECTNAME=LodestoneV2
 
 # Active Configuration
-DEFAULTCONF=v2.3.0
+DEFAULTCONF=v2_3_1
 CONF=${DEFAULTCONF}
 
 # All Configurations
-ALLCONFS=v2.3.0 
+ALLCONFS=v2_3_1 
 
 
 # build
@@ -45,13 +45,13 @@ ALLCONFS=v2.3.0
 
 # clobber
 .clobber-impl: .clobber-pre .depcheck-impl
-	    ${MAKE} SUBPROJECTS=${SUBPROJECTS} CONF=v2.3.0 clean
+	    ${MAKE} SUBPROJECTS=${SUBPROJECTS} CONF=v2_3_1 clean
 
 
 
 # all
 .all-impl: .all-pre .depcheck-impl
-	    ${MAKE} SUBPROJECTS=${SUBPROJECTS} CONF=v2.3.0 build
+	    ${MAKE} SUBPROJECTS=${SUBPROJECTS} CONF=v2_3_1 build
 
 
 
