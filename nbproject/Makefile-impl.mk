@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Lodestone v2.X
+PROJECTNAME=LodestoneV2
 
 # Active Configuration
 DEFAULTCONF=v2.3.0

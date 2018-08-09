@@ -602,7 +602,7 @@ void sendConfig(void)
     if((USBDeviceState < CONFIGURED_STATE) || (USBSuspendControl==1))   return;
     if(!USBHandleBusy(USBGenericInHandle4))
     {
-        flashRead();
+        //flashRead();
         configPacket.inplane_hz  = INPLANE_HZ;
         configPacket.outplane_hz = OUTPLANE_HZ;
         configPacket.rx          = RX;
@@ -620,7 +620,8 @@ void sendConfig(void)
 
         USBGenericInHandle4 = USBGenWrite(4, (BYTE*) &configPacket, 56);
         //Required by USB Standard
-        USBGenericInHandle4 = USBGenWrite(4, (BYTE*) &TERMINATE_PACKET, 0); 
+        //USBGenericInHandle4 = USBGenWrite(4, (BYTE*) &TERMINATE_PACKET, 0);
+        //USBTransferOnePacket(4,IN_TO_HOST,&TERMINATE_PACKET,0); 
     }
 }
 
@@ -629,7 +630,9 @@ void getConfig(void)
     if((USBDeviceState < CONFIGURED_STATE) || (USBSuspendControl==1))   return;
     if(!USBHandleBusy(USBGenericOutHandle5))
     {
+        //unsigned char temp = 0;
         USBGenericOutHandle5 = USBGenRead(5, (BYTE*) &configPacket, 56);
+        //USBGenericOutHandle5 = USBTransferOnePacket(5,OUT_FROM_HOST,&TERMINATE_PACKET,0);
         INPLANE_HZ  = configPacket.inplane_hz;
         OUTPLANE_HZ = configPacket.outplane_hz;
         RX          = configPacket.rx;
@@ -663,6 +666,10 @@ void getConfig(void)
         OC4CONbits.ON = 1;
 
         qp_frequency = INPLANE_HZ;
+    }
+    else
+    {
+        X_OETOA = 22;
     }
 }
 
