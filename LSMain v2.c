@@ -233,6 +233,7 @@ void PWM_Out(int magnet, float magnitude);
 double readVoltage(void);
 void readMagnetValues(void);
 void sendVoltage(void);
+void sendDebug(void);
 void HighPriorityISR(void);
 void LowPriorityISR(void);
 void setDirection(int magnet, BOOL direction);

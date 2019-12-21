@@ -33,7 +33,7 @@ ROM BYTE configDescriptor1[] = {
     /* Configuration Descriptor */
     0x09,                         //sizeof(USB_CFG_DSC),         // Size of this descriptor in bytes
     USB_DESCRIPTOR_CONFIGURATION, // CONFIGURATION descriptor type
-    0x35, 0x00,                   // Total length of data for this cfg
+    0x3C, 0x00,                   // Total length of data for this cfg
     1,                            // Number of interfaces in this cfg
     1,                            // Index value of this configuration
     0,                            // Configuration string index
@@ -45,7 +45,7 @@ ROM BYTE configDescriptor1[] = {
     USB_DESCRIPTOR_INTERFACE, // INTERFACE descriptor type
     0,                        // Interface Number
     0,                        // Alternate Setting Number
-    5,                        // Number of endpoints in this intf
+    6,                        // Number of endpoints in this intf
     0xFF,                     // Class code
     0xFF,                     // Subclass code
     0xFF,                     // Protocol code
@@ -89,7 +89,7 @@ ROM BYTE configDescriptor1[] = {
     _EP05_OUT,               //EndpointAddress
     _BULK,                   //Attributes
     64, 0x00,                //size
-    1                        //Interval
+    1,                        //Interval
 
     /* Endpoint Descriptor */
     0x07,                    //sizeof(USB_EP_DSC)
