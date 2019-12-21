@@ -109,6 +109,7 @@ float MagZ_Prev      = 0;
 float inplanePeriod  = 1;
 float outplanePeriod = 1;
 float voltage        = 0;
+int debug            = 0;
 int PBDivide         = 0;
 int timescale2       = 0;
 int timescale3       = 0;
@@ -181,8 +182,6 @@ VOLT_PACKET INPacket;
 
 USB_HANDLE USBGenericInHandle2 = 0;
 USB_HANDLE USBGenericOutHandle3 = 0;
-//DEBUG PIPE
-USB_HANDLE USBGenericInHandle6 = 0;
 
 typedef union CONFIG_PACKET
 {
@@ -233,7 +232,6 @@ void PWM_Out(int magnet, float magnitude);
 double readVoltage(void);
 void readMagnetValues(void);
 void sendVoltage(void);
-void sendDebug(void);
 void HighPriorityISR(void);
 void LowPriorityISR(void);
 void setDirection(int magnet, BOOL direction);
@@ -310,7 +308,7 @@ void main(void)
         else
         {
             voltage = readVoltage();
-            sendVoltage();
+            // sendVoltage();
             readMagnetValues();
             PWM_Out(X, MagX_Curr);
             PWM_Out(Y, MagY_Curr);
@@ -594,18 +592,9 @@ void sendVoltage(void)
     if((USBDeviceState < CONFIGURED_STATE) || (USBSuspendControl==1))   return;
     if(!USBHandleBusy(USBGenericInHandle2))
     {
-        USBGenericInHandle2 = USBGenWrite(2, (BYTE*) &voltage, 4);
+        if (debug != 0)
+            USBGenericInHandle2 = USBGenWrite(2, (BYTE*) &debug, 4);
     }
-}
-
-void sendDebug(void)
-{
-    if((USBDeviceState < CONFIGURED_STATE) || (USBSuspendControl==1))   return;
-    if(!USBHandleBusy(USBGenericInHandle6))
-    {
-        USBGenericInHandle6 = USBGenWrite(6, (BYTE*) &control_message, 1);
-    }
-
 }
 
 void sendConfig(void)
@@ -638,9 +627,15 @@ void sendConfig(void)
 
 void getConfig(void)
 {
-    if((USBDeviceState < CONFIGURED_STATE) || (USBSuspendControl==1))   return;
+    debug = 3;
+    sendVoltage();
+    if((USBDeviceState < CONFIGURED_STATE) || (USBSuspendControl==1))   return;  
+    debug = 4;
+    sendVoltage();
     if(!USBHandleBusy(USBGenericOutHandle5))
     {
+        debug = 5;
+        sendVoltage();
         //unsigned char temp = 0;
         USBGenericOutHandle5 = USBGenRead(5, (BYTE*) &configPacket, 56);
         //USBGenericOutHandle5 = USBTransferOnePacket(5,OUT_FROM_HOST,&TERMINATE_PACKET,0);
@@ -659,8 +654,12 @@ void getConfig(void)
         Y_OETOA     = configPacket.Y_OeToA;
         Z_OETOA     = configPacket.Z_OeToA;
 
+        debug = 6;
+        sendVoltage();
         flashWrite();
 
+        debug = 7;
+        sendVoltage();
         T2CONbits.ON  = 0;
         T2CONbits.ON  = 0;
         OC1CONbits.ON = 0;
@@ -677,11 +676,15 @@ void getConfig(void)
         OC4CONbits.ON = 1;
 
         qp_frequency = INPLANE_HZ;
+        debug = 8;
+        sendVoltage();
     }
     else
     {
         X_OETOA = 22;
     }
+    debug = 9;
+    sendVoltage();
 }
 
 void QPstart(void)
@@ -713,14 +716,16 @@ void readMessages(void)
     if(!USBHandleBusy(USBGenericOutHandle3))
     {
         USBGenericOutHandle3 = USBGenRead(3, (BYTE*) &control_message, 1);
-        if(control_message != 0)
-            sendDebug();
         switch(control_message)
         {
             case 1:
+                debug = 1;
+                sendVoltage();
                 sendConfig();
                 break;
             case 2:
+                debug = 2;
+                sendVoltage();
                 getConfig();
                 break;
             case 3:
