@@ -316,7 +316,6 @@ void main(void)
             PWM_Out(Y, MagY_Curr);
             PWM_Out(Z, MagZ_Curr);
             readMessages();
-            sendDebug();
         }
     }
 }
@@ -714,6 +713,8 @@ void readMessages(void)
     if(!USBHandleBusy(USBGenericOutHandle3))
     {
         USBGenericOutHandle3 = USBGenRead(3, (BYTE*) &control_message, 1);
+        if(control_message != 0)
+            sendDebug();
         switch(control_message)
         {
             case 1:
