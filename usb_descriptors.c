@@ -90,6 +90,14 @@ ROM BYTE configDescriptor1[] = {
     _BULK,                   //Attributes
     64, 0x00,                //size
     1                        //Interval
+
+    /* Endpoint Descriptor */
+    0x07,                    //sizeof(USB_EP_DSC)
+    USB_DESCRIPTOR_ENDPOINT, //Endpoint Descriptor
+    _EP06_IN,               //EndpointAddress
+    _INTERRUPT,                   //Attributes
+    4, 0x00,                 //size
+    1                        //Interval
 };
 
 

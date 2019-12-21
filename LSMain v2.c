@@ -180,9 +180,9 @@ typedef union VOLT_PACKET
 VOLT_PACKET INPacket;
 
 USB_HANDLE USBGenericInHandle2 = 0;
-
-
 USB_HANDLE USBGenericOutHandle3 = 0;
+//DEBUG PIPE
+USB_HANDLE USBGenericInHandle6 = 0;
 
 typedef union CONFIG_PACKET
 {
@@ -315,6 +315,7 @@ void main(void)
             PWM_Out(Y, MagY_Curr);
             PWM_Out(Z, MagZ_Curr);
             readMessages();
+            sendDebug();
         }
     }
 }
@@ -595,6 +596,16 @@ void sendVoltage(void)
     {
         USBGenericInHandle2 = USBGenWrite(2, (BYTE*) &voltage, 4);
     }
+}
+
+void sendDebug(void)
+{
+    if((USBDeviceState < CONFIGURED_STATE) || (USBSuspendControl==1))   return;
+    if(!USBHandleBusy(USBGenericInHandle6))
+    {
+        USBGenericInHandle6 = USBGenWrite(6, (BYTE*) &control_message, 1);
+    }
+
 }
 
 void sendConfig(void)
