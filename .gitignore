@@ -4,3 +4,4 @@ debug/
 debug
 dist
 dist/
+.vscode

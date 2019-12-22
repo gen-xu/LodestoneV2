@@ -49,14 +49,14 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 // Peripheral Configuration
 
-#define MY_VID            0x04D8
-#define MY_PID            0x000C
+#define USB_VID            0x04D8
+#define USB_PID            0x000C
 #define USB_INTERRUPT
 #define USB_PULLUP_OPTION      USB_PULLUP_DISABLE
 #define USB_TRANSCEIVER_OPTION USB_INTERNAL_TRANSCEIVER
 #define USB_EP0_BUFF_SIZE     8
 #define USB_MAX_NUM_INT       (0+1)
-#define USB_MAX_EP_NUMBER 7
+#define USB_MAX_EP_NUMBER 5
 #define USB_NUM_STRING_DESCRIPTORS 4
 #define SERIAL_NUMBER_LENGTH 6
 #define SERIAL_NUMBER '0','0','0','0','0','A'
@@ -68,11 +68,5 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 //#define USB_DISABLE_SOF_HANDLER                 
 //#define USB_DISABLE_ERROR_HANDLER               
 //#define USB_DISABLE_SET_DESCRIPTOR_HANDLER      
-
-// Generic Function Configuration
-
-#define USB_USE_GEN
-#define USBGEN_EP_NUM  1
-#define USBGEN_EP_SIZE 12
 
 #endif
